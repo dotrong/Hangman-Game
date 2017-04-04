@@ -1,5 +1,5 @@
 
-var a_listWords = ["TRONG","HIEU", "DO", "JIMMIINGUYEN"];
+var a_listWords = ["BRIAN","TRONG","HIEU", "DO", "JIMMIINGUYEN"];
 var length = a_listWords.length;
 
 //Initialization for first round
