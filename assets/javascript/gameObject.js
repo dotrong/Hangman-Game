@@ -1,3 +1,5 @@
+//countryInfo is object that has country information: capital, flag image, hymne national
+
 var countryInfo = {
 
 	"AUSTRIA": ["Vienna","assets/images/austria.png","assets/audio/austria.ogg"],
@@ -13,9 +15,11 @@ var countryInfo = {
 
 };
 
+//declare hangManGame object. This object will hold all variables and medthods related to the game
+
 var hangManGame = {
 
-	"listWords": Object.keys(countryInfo),
+	"listWords": Object.keys(countryInfo), //get list of Key name from object countryInfo
 	"wins":0,
 	"loss":0,
 	"numberGuessRemain":12,
@@ -23,6 +27,8 @@ var hangManGame = {
 	"currentDashOutput" : [],
 	"currentWord": "",
 	"keyPressed":"",
+
+	//init method will initialize all variables and html element to begining state.
 
 	init: function(){
 
@@ -36,17 +42,17 @@ var hangManGame = {
 
 		this.currentWord = this.listWords[Math.floor(Math.random()*length)];
 
-
+		//create a word _ _ _ _ output based on length of random word
 		for (var i = 0;i< this.currentWord.length;i++) {
 			this.currentDashOutput.push("_ ") ;
-
 
 		}
 
 		this.writeHtml();
-
-		
+	
 	},
+
+	// removeResult: to clean up HTML result output, added when user wins or loses.
 
 	removeResult: function() {
 
@@ -61,6 +67,8 @@ var hangManGame = {
   		document.querySelector("#info").innerHTML = "";
 
 	},
+
+	//display: to print log to console for troubleshooting
 
 	display: function() {
 
@@ -79,6 +87,8 @@ var hangManGame = {
 
 	},
 
+	//writeHtml: to write update score and game stats to html page
+
 	writeHtml: function() {
 
 		document.querySelector("#wins").innerHTML = this.wins;
@@ -90,6 +100,8 @@ var hangManGame = {
 		document.querySelector("#currentDashOutput").innerHTML = this.currentDashOutput.join(" ");
 
 	},
+
+	//playSound: play national hymne national or sad sound, having one parameter status
 
 	playSound: function(status) {
 		if (status == "lose") {
@@ -113,29 +125,39 @@ var hangManGame = {
 
 	},
 
+	//stopSound: to stop play music when user is playing.
 	stopSound:  function() {
 
 		document.querySelector("#audio").innerHTML = "";
 
 	},
+
+	//play: main method of this object. update game stat, select random word, calling other methods ...
 	
 	play: function(keystr) {
+
+		//remove html sound if there is
 
 		this.removeResult();
 
 		this.stopSound();
 
+		//reduce the number of remaining guess by 1
 		this.numberGuessRemain--;
 
 		var keyUpperCase = keystr.toUpperCase();
 
 		this.keyPressed = keyUpperCase;
 
+		//if user press a letter that not in existing list, then add this letter to that list
+
 	  	if (this.listGuessedKey.indexOf(keyUpperCase) == -1) {
 
 	  		this.listGuessedKey.push(keyUpperCase);
 
 	  	}
+
+	  	//Update known character in _ _ _ string
 
 	  	for (var j = 0;j<this.currentWord.length;j++) {
 
@@ -149,12 +171,17 @@ var hangManGame = {
 	  	this.display();
 	  	this.writeHtml();
 
-		  	//winner
+		// if there is no more '_' in the quizzed word, then user wins
+
 	  	if (this.currentDashOutput.indexOf("_ ") == -1) {
+
+	  		//update wins stat
 
 	  		this.wins++;
 
 	  		console.log("You win");
+
+	  		//print result on html page
 
 	  		document.querySelector("#result").setAttribute("class","alert alert-success");
 
@@ -166,8 +193,12 @@ var hangManGame = {
 	  		document.querySelector("#flag").setAttribute("class","flagImage");
 
 	  		document.querySelector("#info").innerHTML = "Info: Capital is " + countryInfo[this.currentWord ][0];
+
+	  		//play music
 	  		  
 	  		this.playSound("win");
+
+	  		//reinitalized game stats
 
 	  		this.init();
 
@@ -175,14 +206,18 @@ var hangManGame = {
 
 	  	//you lose
 	  	else if (this.numberGuessRemain == 0) {
+
+	  		//update loss stats
 	  		this.loss++;
 
 	  		console.log("You lose ");
 
+	  		//print result on html page
+
 	  		document.querySelector("#result").setAttribute("class","alert alert-danger");
 
 	  		document.querySelector("#result").innerHTML = "You Loose! Country name is " + this.currentWord +
-	  		 ".Press anykey to continue to play";
+	  		 ". Press anykey to continue to play";
 
 	  		document.querySelector("#flag").setAttribute("src",countryInfo[this.currentWord ][1]);
 
@@ -190,7 +225,11 @@ var hangManGame = {
 
 	  		document.querySelector("#info").innerHTML = "Info: Capital is " + countryInfo[this.currentWord ][0];
 
+	  		//play sad sound
+
 	  		this.playSound("lose");
+
+	  		//reinitalized game stats
 
 	  		this.init();
 
@@ -200,11 +239,21 @@ var hangManGame = {
 
 };
 
+//The Game Starts Here .....
+
+//call init() method of hangManGame to reset game stats variables
+
 hangManGame.init();
+
+//waiting for user key press, pass event object to function
 
 document.onkeyup = function(event) {
 
+	//get the key press and assign it to variable "key"
+
 	var key = event.key;
+
+	//call play method on hangManGame object
 
 	hangManGame.play(key);
 
