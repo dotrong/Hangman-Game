@@ -1,15 +1,15 @@
 var countryInfo = {
 
-	"FRANCE": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"USA": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"CANADA": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"MEXICO": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"ITALY": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"SPAIN": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"CHINA": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"BRAZIL": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"ARGENTINA": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"],
-	"VIETNAM": ["hint1","hint2","imageUrl","assets/audio/Les-Champs-Elysees.mp3"]
+	"AUSTRIA": ["Vienna","assets/images/austria.png","assets/audio/austria.ogg"],
+	"BELGIUM": ["Bruxelles","assets/images/belgium.png","assets/audio/belgium.ogg"],
+	"BULGARIA": ["Sophia","assets/images/bulgaria.png","assets/audio/bulgaria.ogg"],
+	"CROATIA": ["Zagreb","assets/images/croatia.png","assets/audio/croatia.ogg"],
+	"FRANCE": ["Paris","assets/images/france.png","assets/audio/france.ogg"],
+	"GERMANY": ["Berlin","assets/images/germany.png","assets/audio/germany.ogg"],
+	"GREECE": ["Athens","assets/images/greece.png","assets/audio/greece.ogg"],
+	"HUNGARY": ["Budapest","assets/images/hungary.png","assets/audio/hungary.ogg"],
+	"NETHERLANDS": ["Amsterdam","assets/images/netherlands.png","assets/audio/netherlands.ogg"],
+	"ITALY": ["Rome","assets/images/italy.png","assets/audio/italy.ogg"],
 
 };
 
@@ -44,7 +44,22 @@ var hangManGame = {
 		}
 
 		this.writeHtml();
+
 		
+	},
+
+	removeResult: function() {
+
+		document.querySelector("#result").removeAttribute("class");
+
+  		document.querySelector("#result").innerHTML = "";
+
+  		document.querySelector("#flag").removeAttribute("src");
+
+  		document.querySelector("#flag").removeAttribute("class");
+
+  		document.querySelector("#info").innerHTML = "";
+
 	},
 
 	display: function() {
@@ -66,35 +81,35 @@ var hangManGame = {
 
 	writeHtml: function() {
 
-		var html = "<p> wins: " + this.wins + "</p>" +
-		
-		"<p> loss: " + this.loss + "</p>" +
+		document.querySelector("#wins").innerHTML = this.wins;
+		document.querySelector("#loss").innerHTML = this.loss;
+		document.querySelector("#numberGuessRemain").innerHTML = this.numberGuessRemain;
 
-		"<p> computer word: " + this.currentWord + "</p>" +
-		"<p> Number of remaining guess: " + this.numberGuessRemain + "</p>" +
-
-		"<p> User press: " + this.keyPressed + "</p>" +
-
-		"<p> List guessed keys: " + this.listGuessedKey + "</p>" +
-
-		"<p> Word Ouput: " + this.currentDashOutput + "</p>" ;
-
-		
-		document.querySelector("#game").innerHTML = html;
-
-		
-
+		document.querySelector("#listGuessedKey").innerHTML = this.listGuessedKey;
+	
+		document.querySelector("#currentDashOutput").innerHTML = this.currentDashOutput.join(" ");
 
 	},
 
-	playSound: function() {
-		var country = this.currentWord;
-		var html = "<audio autoplay>" + "<source src=" + "\"" + countryInfo[country][3] + "\""	 + " type=\"audio/mpeg\">" + "</audio>";
- 				
+	playSound: function(status) {
+		if (status == "lose") {
 
- 	console.log(html);
+			var html = "<audio autoplay>" + "<source src=" + "\"" + "assets/audio/lose.mp3" + "\""	 + " type=\"audio/mpeg\">" + "</audio>";
+
+			document.querySelector("#audio").innerHTML = html;
+
+
+		}
+		else {
+
+			var country = this.currentWord;
+			var html = "<audio autoplay>" + "<source src=" + "\"" + countryInfo[country][2] + "\""	 + " type=\"audio/ogg\">" + "</audio>";
+
+ 			console.log(html);
  
-		document.querySelector("#audio").innerHTML = html;
+			document.querySelector("#audio").innerHTML = html;
+
+		}	
 
 	},
 
@@ -105,6 +120,8 @@ var hangManGame = {
 	},
 	
 	play: function(keystr) {
+
+		this.removeResult();
 
 		this.stopSound();
 
@@ -139,7 +156,18 @@ var hangManGame = {
 
 	  		console.log("You win");
 
-	  		this.playSound();
+	  		document.querySelector("#result").setAttribute("class","alert alert-success");
+
+	  		document.querySelector("#result").innerHTML = "You WIN! Country name is " + this.currentWord +
+	  		 ". Press anykey to continue";
+
+	  		document.querySelector("#flag").setAttribute("src",countryInfo[this.currentWord ][1]);
+
+	  		document.querySelector("#flag").setAttribute("class","flagImage");
+
+	  		document.querySelector("#info").innerHTML = "Info: Capital is " + countryInfo[this.currentWord ][0];
+	  		  
+	  		this.playSound("win");
 
 	  		this.init();
 
@@ -151,7 +179,19 @@ var hangManGame = {
 
 	  		console.log("You lose ");
 
-	  		
+	  		document.querySelector("#result").setAttribute("class","alert alert-danger");
+
+	  		document.querySelector("#result").innerHTML = "You Loose! Country name is " + this.currentWord +
+	  		 ".Press anykey to continue to play";
+
+	  		document.querySelector("#flag").setAttribute("src",countryInfo[this.currentWord ][1]);
+
+	  		document.querySelector("#flag").setAttribute("class","flagImage");
+
+	  		document.querySelector("#info").innerHTML = "Info: Capital is " + countryInfo[this.currentWord ][0];
+
+	  		this.playSound("lose");
+
 	  		this.init();
 
 		}
@@ -159,7 +199,6 @@ var hangManGame = {
 	},	
 
 };
-
 
 hangManGame.init();
 

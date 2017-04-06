@@ -4,29 +4,92 @@
 	<meta charset="utf-8"/>
 	<title>Hangman Game</title>
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	
 
 </head>
 <body>
 
-	<h2>press anykey to start playing</h2>
+	<nav class="navbar navbar-default euflag">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<h2 class="navbar-brand">European Union - Countries Qizz</h2>
+    		</div>
+  		</div>
+	</nav>
+	
+	<div class="container">
 
-	<div id="game">
-		<p>Wins</p>
-		<p>Loss</p>
+		<div class="row">
 
-		<p>Current Word</p>
+			<div class="col-md-6 ">
 
-		<p>Number of guess remaining</p>
+				<h3><span class="label label-primary">Wins</span> <span class="badge" id="wins">42</span> </h3>
+
+				<h3><span class="label label-danger">Loss</span> <span class="badge" id="loss">42</span> </h3>
+
+				<h3><span class="label label-info">Number of Guess remaining</span> <span class="badge" id="numberGuessRemain">42</span> </h3>
+
+				<h3><span class="label label-success" id="currentDashOutput">_ _ _ _ _ _ _</span> </h3>
+
+				<h3><span class="label label-default" >List Key Pressed</span> <span id="listGuessedKey"></span> </h3>
+			
+			</div>
+
+			<div class="col-md-6">
+
+				<div class="row">
+					<div class="col-md-12">
+						<div role="alert" id="result">
+						
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+
+					<div class="col-md-12">
+						<img id="flag"> </img>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-12"> 
+
+						<p id="info"></p>
+					</div>
+				</div>	
+
+			</div>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-12">
+				<h2>Rule of Game</h2>
+				<p>Press any alphabetical key to start. Game will end and user win if the name of country is found before the 12th guess reaches. Hymne national of that country will play if user win or will play sad sound if user loses. Good luck!</p>
+			</div>
+
+		</div>
+
 
 	</div>
+	
 
 	<div id="audio">
 
-	<p> audio </p>
+
 
 	</div>
+
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+    <p class="center"> Trong Do 2016 </p>
+  </div>
+</nav>
 
 	<script type="text/javascript" src="assets/javascript/gameObject.js"></script>
 
