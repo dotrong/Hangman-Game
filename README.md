@@ -1,2 +1,2 @@
 # Hangman-Game
-Javascript homework
+Simple question/answer game written in Javascript
