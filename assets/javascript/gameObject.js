@@ -1,5 +1,6 @@
 //countryInfo is object that has country information: capital, flag image, hymne national
-
+(function() {
+	
 var countryInfo = {
 
 	"AUSTRIA": ["Vienna","assets/images/austria.png","assets/audio/austria.ogg"],
@@ -257,4 +258,5 @@ document.onkeyup = function(event) {
 
 	hangManGame.play(key);
 
-};	
+};
+})();
